@@ -1,0 +1,401 @@
+Создание нового виртуал хоста:
+0. Перед тем как создавать проект заходим в нужную дерикторию
+cd /home/roma/work
+mkdir site
+cd site
+nano index.php
+
+
+
+1. делаем новую копию конфига в папке
+/etc/apache2/sites-available/  
+
+копируем и вставляем конфигурацию в наш новый проект вот так 
+sudo cp /etc/apache2/sites-available/mysite.conf /etc/apache2/sites-available/firstsite.conf
+
+если у нас еще нет созданного конфига то вот так 
+
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/mysite2.conf
+
+ 
+
+вносим правки:
+ServerName - домен, на котором будет открыватся твой проект
+DocumentRoot - путь к твоему проекту
+
+для этого nano /etc/apache2/sites-available/firstsite.conf
+
+в чем секрет, вставляем вот этот текст и в нем уже правим 
+
+<VirtualHost *:80>
+
+        ServerName music
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /home/roma/work/music
+
+        AssignUserId roma roma
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+
+2. Включаем в работу виртуалхост
+sudo a2ensite sitename.conf
+
+3. Перезагружаем сервер
+sudo service apache2 restart
+
+4. В файл /etc/hosts
+вносим новый домен проекта и ип, на который системе стоит обращатся (в нашем случае на локалхост)
+
+для этого sudo nano /etc/hosts
+
+история включения нового проекта
+
+roma@tony-montana:~$ cat 
+.bash_history              .dmrc                      .ICEauthority              .PhpStorm2016.1/           .sugar/                    .Xauthority                Музыка/
+.bash_logout               examples.desktop           .java/                     PhpstormProjects/          teamviewer.deb             .xsession-errors           Общедоступные/
+.bashrc                    .gconf/                    .local/                    .pki/                      teamviewer_i386.deb        .xsession-errors.old       Рабочий стол/
+.cache/                    .gitconfig                 .mozilla/                  .profile                   teamviewer_i386.tar.xz     Видео/                     Шаблоны/
+.compiz/                   .gksu.lock                 .mysql_history             .selected_editor           teamviewer_linux.deb       Документы/                 
+.config/                   .gnome/                    .nano/                     signplugin-linux.bin       .wget-hsts                 Загрузки/                  
+.dbus/                     .iBanksignplugin/          .oracle_jre_usage/         .sudo_as_admin_successful  work/                      Изображения/               
+roma@tony-montana:~$ cat 
+.bash_history              .dmrc                      .ICEauthority              .PhpStorm2016.1/           .sugar/                    .Xauthority                Музыка/
+.bash_logout               examples.desktop           .java/                     PhpstormProjects/          teamviewer.deb             .xsession-errors           Общедоступные/
+.bashrc                    .gconf/                    .local/                    .pki/                      teamviewer_i386.deb        .xsession-errors.old       Рабочий стол/
+.cache/                    .gitconfig                 .mozilla/                  .profile                   teamviewer_i386.tar.xz     Видео/                     Шаблоны/
+.compiz/                   .gksu.lock                 .mysql_history             .selected_editor           teamviewer_linux.deb       Документы/                 
+.config/                   .gnome/                    .nano/                     signplugin-linux.bin       .wget-hsts                 Загрузки/                  
+.dbus/                     .iBanksignplugin/          .oracle_jre_usage/         .sudo_as_admin_successful  work/                      Изображения/               
+roma@tony-montana:~$ cat work/
+firstsite/ mynewsite/ mysite/    
+roma@tony-montana:~$ cat work/
+firstsite/ mynewsite/ mysite/    
+roma@tony-montana:~$ cat work/firstsite/index.php 
+.bash_history              .dmrc                      .ICEauthority              .PhpStorm2016.1/           .sugar/                    .Xauthority                Музыка/
+.bash_logout               examples.desktop           .java/                     PhpstormProjects/          teamviewer.deb             .xsession-errors           Общедоступные/
+.bashrc                    .gconf/                    .local/                    .pki/                      teamviewer_i386.deb        .xsession-errors.old       Рабочий стол/
+.cache/                    .gitconfig                 .mozilla/                  .profile                   teamviewer_i386.tar.xz     Видео/                     Шаблоны/
+.compiz/                   .gksu.lock                 .mysql_history             .selected_editor           teamviewer_linux.deb       Документы/                 
+.config/                   .gnome/                    .nano/                     signplugin-linux.bin       .wget-hsts                 Загрузки/                  
+.dbus/                     .iBanksignplugin/          .oracle_jre_usage/         .sudo_as_admin_successful  work/                      Изображения/               
+roma@tony-montana:~$ cat work/firstsite/index.php 
+<?php
+echo '333';
+
+
+roma@tony-montana:~$ nano /etc/apache2/
+apache2.conf       conf-available/    envvars            mods-available/    ports.conf         sites-enabled/     
+apache2.conf.save  conf-enabled/      magic              mods-enabled/      sites-available/   
+roma@tony-montana:~$ nano /etc/apache2/sites-available/
+000-default.conf      default-ssl.conf      firstsite.conf        mynewsite.conf        mysite.conf           site.com.conf         site.com.conf.save    site.com.conf.save.1  
+roma@tony-montana:~$ nano /etc/apache2/sites-available/firstsite.conf 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ nano /etc/apache2/sites-enabled/
+000-default.conf  mysite.conf       site.com.conf     
+roma@tony-montana:~$ sudo a2ensite firstsite.conf 
+[sudo] пароль для roma: 
+Enabling site firstsite.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+roma@tony-montana:~$ systemctl reload apache2
+roma@tony-montana:~$ 
+
+
+
+история настройки сервера
+
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ nah ddi
+Команда 'nah' не найдена, возможно вы имели в виду:
+ Команда 'nash' из пакета 'lrslib' (universe)
+ Команда 'nam' из пакета 'nam' (universe)
+ Команда 'nap' из пакета 'nap' (universe)
+ Команда 'na6' из пакета 'ipv6toolkit' (universe)
+nah: команда не найдена
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ clerr
+Команда 'clerr' не найдена, возможно вы имели в виду:
+ Команда 'clear' из пакета 'ncurses-bin' (main)
+ Команда 'clirr' из пакета 'clirr' (universe)
+clerr: команда не найдена
+roma@tony-montana:~$ clсдeуфк
+clсдeуфк: команда не найдена
+roma@tony-montana:~$ clear
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ ps aux | grep apache
+root      1124  0.0  0.3 263792 26332 ?        Ss   23:04   0:00 /usr/sbin/apache2 -k start
+www-data  1142  0.0  0.0 263824  7940 ?        S    23:04   0:00 /usr/sbin/apache2 -k start
+www-data  1143  0.0  0.0 263824  7940 ?        S    23:04   0:00 /usr/sbin/apache2 -k start
+www-data  1144  0.0  0.0 263824  7940 ?        S    23:04   0:00 /usr/sbin/apache2 -k start
+www-data  1145  0.0  0.0 263824  7940 ?        S    23:04   0:00 /usr/sbin/apache2 -k start
+www-data  1146  0.0  0.0 263840  7940 ?        S    23:04   0:00 /usr/sbin/apache2 -k start
+roma      3915  0.0  0.0  21328  1016 pts/0    S+   23:26   0:00 grep --color=auto apache
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ 
+roma@tony-montana:~$ cd /var/www/
+html/   mysite/ 
+roma@tony-montana:~$ cd /var/www/
+html/   mysite/ 
+roma@tony-montana:~$ cd /var/www/
+html/   mysite/ 
+roma@tony-montana:~$ cd /var/www/
+html/   mysite/ 
+roma@tony-montana:~$ cd /var/www/html/
+roma@tony-montana:/var/www/html$ dir
+roma@tony-montana:/var/www/html$ nano index.php
+roma@tony-montana:/var/www/html$ 
+roma@tony-montana:/var/www/html$ nano /etc/apache2/
+apache2.conf       conf-available/    envvars            mods-available/    ports.conf         sites-enabled/     
+apache2.conf.save  conf-enabled/      magic              mods-enabled/      sites-available/   
+roma@tony-montana:/var/www/html$ nano /etc/apache2/conf-
+conf-available/ conf-enabled/   
+roma@tony-montana:/var/www/html$ nano /etc/apache2/conf-
+conf-available/ conf-enabled/   
+roma@tony-montana:/var/www/html$ nano /etc/apache2/conf-available/
+charset.conf                  localized-error-pages.conf    php7.1-cgi.conf               security.conf                 
+javascript-common.conf        other-vhosts-access-log.conf  php7.1-fpm.conf               serve-cgi-bin.conf            
+roma@tony-montana:/var/www/html$ nano /etc/apache2/conf-available/
+charset.conf                  localized-error-pages.conf    php7.1-cgi.conf               security.conf                 
+javascript-common.conf        other-vhosts-access-log.conf  php7.1-fpm.conf               serve-cgi-bin.conf            
+roma@tony-montana:/var/www/html$ nano /etc/apache2/conf-available/
+charset.conf                  localized-error-pages.conf    php7.1-cgi.conf               security.conf                 
+javascript-common.conf        other-vhosts-access-log.conf  php7.1-fpm.conf               serve-cgi-bin.conf            
+roma@tony-montana:/var/www/html$ nano /etc/apache2/conf-enabled/
+charset.conf                  javascript-common.conf        localized-error-pages.conf    other-vhosts-access-log.conf  security.conf                 serve-cgi-bin.conf
+roma@tony-montana:/var/www/html$ nano /etc/apache2/conf-enabled/
+charset.conf                  javascript-common.conf        localized-error-pages.conf    other-vhosts-access-log.conf  security.conf                 serve-cgi-bin.conf
+roma@tony-montana:/var/www/html$ nano /etc/apache2/conf-enabled/
+charset.conf                  javascript-common.conf        localized-error-pages.conf    other-vhosts-access-log.conf  security.conf                 serve-cgi-bin.conf
+roma@tony-montana:/var/www/html$ nano /etc/apache2/conf-enabled/
+charset.conf                  javascript-common.conf        localized-error-pages.conf    other-vhosts-access-log.conf  security.conf                 serve-cgi-bin.conf
+roma@tony-montana:/var/www/html$ sudo a2dissite charset.conf
+[sudo] пароль для roma: 
+vvПопробуйте ещё раз.
+[sudo] пароль для roma: 
+
+
+
+
+
+
+
+
+
+
+
+Попробуйте ещё раз.
+[sudo] пароль для roma: 
+sudo: 3 попытки ввода неправильного пароля
+roma@tony-montana:/var/www/html$ sudo a2dissite charset.conf
+[sudo] пароль для roma: 
+ERROR: Site charset does not exist!
+roma@tony-montana:/var/www/html$ sudo a2dissite charset
+ERROR: Site charset does not exist!
+roma@tony-montana:/var/www/html$ 
+roma@tony-montana:/var/www/html$ nano /etc/apache2/
+apache2.conf       conf-available/    envvars            mods-available/    ports.conf         sites-enabled/     
+apache2.conf.save  conf-enabled/      magic              mods-enabled/      sites-available/   
+roma@tony-montana:/var/www/html$ nano /etc/apache2/
+apache2.conf       conf-available/    envvars            mods-available/    ports.conf         sites-enabled/     
+apache2.conf.save  conf-enabled/      magic              mods-enabled/      sites-available/   
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-
+sites-available/ sites-enabled/   
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-
+sites-available/ sites-enabled/   
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-available/
+000-default.conf      default-ssl.conf      mysite.conf           site.com.conf         site.com.conf.save    site.com.conf.save.1  
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-available/
+000-default.conf      default-ssl.conf      mysite.conf           site.com.conf         site.com.conf.save    site.com.conf.save.1  
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-available/
+000-default.conf      default-ssl.conf      mysite.conf           site.com.conf         site.com.conf.save    site.com.conf.save.1  
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-available/
+000-default.conf      default-ssl.conf      mysite.conf           site.com.conf         site.com.conf.save    site.com.conf.save.1  
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-available/
+000-default.conf      default-ssl.conf      mysite.conf           site.com.conf         site.com.conf.save    site.com.conf.save.1  
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-enabled/
+000-default.conf  mysite.conf       site.com.conf     
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-enabled/
+000-default.conf  mysite.conf       site.com.conf     
+roma@tony-montana:/var/www/html$ nano /etc/apache2/sites-enabled/000-default.conf
+roma@tony-montana:/var/www/html$ sudo service apache2 restart
+roma@tony-montana:/var/www/html$ 
+roma@tony-montana:/var/www/html$ 
+roma@tony-montana:/var/www/html$ 
+roma@tony-montana:/var/www/html$ 
+roma@tony-montana:/var/www/html$ sudo apt-get install libapache-mpm-itk
+Чтение списков пакетов… Готово
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+E: Не удалось найти пакет libapache-mpm-itk
+roma@tony-montana:/var/www/html$ sudo apt-get install libapache2-mpm-itk
+Чтение списков пакетов… Готово
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+НОВЫЕ пакеты, которые будут установлены:
+  libapache2-mpm-itk
+обновлено 0, установлено 1 новых пакетов, для удаления отмечено 0 пакетов, и 10 пакетов не обновлено.
+Необходимо скачать 10,8 kБ архивов.
+После данной операции, объём занятого дискового пространства возрастёт на 45,1 kB.
+Пол:1 http://ua.archive.ubuntu.com/ubuntu zesty/universe amd64 libapache2-mpm-itk amd64 2.4.7-04-1 [10,8 kB]
+Получено 10,8 kБ за 1с (8.374 Б/c)        
+Выбор ранее не выбранного пакета libapache2-mpm-itk.
+(Чтение базы данных … на данный момент установлено 221002 файла и каталога.)
+Подготовка к распаковке …/libapache2-mpm-itk_2.4.7-04-1_amd64.deb …
+Распаковывается libapache2-mpm-itk (2.4.7-04-1) …
+Настраивается пакет libapache2-mpm-itk (2.4.7-04-1) …
+apache2_invoke: Enable module mpm_itk
+roma@tony-montana:/var/www/html$ 
+roma@tony-montana:/var/www/html$ 
+roma@tony-montana:/var/www/html$ 
+roma@tony-montana:/var/www/html$ cd ~/
+roma@tony-montana:~$ dir
+examples.desktop  teamviewer.deb       teamviewer_i386.tar.xz  Видео	  Загрузки     Музыка	      Рабочий\ стол
+PhpstormProjects  teamviewer_i386.deb  teamviewer_linux.deb    Документы  Изображения  Общедоступные  Шаблоны
+roma@tony-montana:~$ mkdir work
+roma@tony-montana:~$ cd work
+roma@tony-montana:~/work$ mkdir mysite
+roma@tony-montana:~/work$ cd mysite
+roma@tony-montana:~/work/mysite$ nano index.php
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/
+apache2.conf       conf-available/    envvars            mods-available/    ports.conf         sites-enabled/     
+apache2.conf.save  conf-enabled/      magic              mods-enabled/      sites-available/   
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/sites-available/
+000-default.conf      default-ssl.conf      mysite.conf           site.com.conf         site.com.conf.save    site.com.conf.save.1  
+roma@tony-montana:~/work/mysite$ sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/mysite2.conf
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/sites-available/mysite.conf 
+roma@tony-montana:~/work/mysite$ rm /etc/apache2/sites-available/mysite2.conf 
+rm: удалить защищенный от записи обычный файл '/etc/apache2/sites-available/mysite2.conf'? y
+rm: невозможно удалить '/etc/apache2/sites-available/mysite2.conf': Отказано в доступе
+roma@tony-montana:~/work/mysite$ sudo rm /etc/apache2/sites-available/mysite2.conf 
+roma@tony-montana:~/work/mysite$ sudo nano /etc/apache2/sites-available/mysite.conf 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ sudo a2ensite mysite
+Site mysite already enabled
+roma@tony-montana:~/work/mysite$ sudo service apache2 restart
+roma@tony-montana:~/work/mysite$ nano /etc/host
+roma@tony-montana:~/work/mysite$ sudo nano /etc/hosts
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ pwd
+/home/roma/work/mysite
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/
+apache2.conf       conf-available/    envvars            mods-available/    ports.conf         sites-enabled/     
+apache2.conf.save  conf-enabled/      magic              mods-enabled/      sites-available/   
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/
+apache2.conf       conf-available/    envvars            mods-available/    ports.conf         sites-enabled/     
+apache2.conf.save  conf-enabled/      magic              mods-enabled/      sites-available/   
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/sites-
+sites-available/ sites-enabled/   
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/sites-
+sites-available/ sites-enabled/   
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/sites-available/
+000-default.conf      default-ssl.conf      mysite.conf           site.com.conf         site.com.conf.save    site.com.conf.save.1  
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/sites-enabled/
+000-default.conf  mysite.conf       site.com.conf     
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/sites-enabled/site.com.conf 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ sudo systemctl restart apache2
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/
+apache2.conf       conf-available/    envvars            mods-available/    ports.conf         sites-enabled/     
+apache2.conf.save  conf-enabled/      magic              mods-enabled/      sites-available/   
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/
+apache2.conf       conf-available/    envvars            mods-available/    ports.conf         sites-enabled/     
+apache2.conf.save  conf-enabled/      magic              mods-enabled/      sites-available/   
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/apache2.conf
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ sudo nano /etc/apache2/apache2.conf
+roma@tony-montana:~/work/mysite$ sudo systemctl restart apache2
+roma@tony-montana:~/work/mysite$ avahi-
+avahi-autoipd            avahi-browse-domains     avahi-publish            avahi-publish-service    avahi-resolve-address    avahi-set-host-name      
+avahi-browse             avahi-daemon             avahi-publish-address    avahi-resolve            avahi-resolve-host-name  
+roma@tony-montana:~/work/mysite$ avahi-
+avahi-autoipd            avahi-browse-domains     avahi-publish            avahi-publish-service    avahi-resolve-address    avahi-set-host-name      
+avahi-browse             avahi-daemon             avahi-publish-address    avahi-resolve            avahi-resolve-host-name  
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ sudo cp /etc/apache2/sites-available/mysite.conf /etc/apache2/sites-available/mynewsite.conf
+roma@tony-montana:~/work/mysite$ nano /etc/apache2/sites-available/mynewsite.conf 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ sudo nano /etc/apache2/sites-available/mynewsite.conf 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ 
+roma@tony-montana:~/work/mysite$ cd ..
+roma@tony-montana:~/work$ mkdir mynewsite
+roma@tony-montana:~/work$ cd mynewsite/
+roma@tony-montana:~/work/mynewsite$ nano index.php
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ sudo nano /etc/apache2/sites-available/mynewsite.conf 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ sudo service apache2 restart
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ 
+roma@tony-montana:~/work/mynewsite$ sudo nano /etc/hosts
+roma@tony-montana:~/work/mynewsite$ 
+

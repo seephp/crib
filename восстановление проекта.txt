@@ -1,0 +1,280 @@
+Пример восставновления файлов в гите, а также проверки нормальных изменений 
+roma@tony-montana:~$ cd home/roma/work/palyan
+bash: cd: home/roma/work/palyan: Нет такого файла или каталога
+roma@tony-montana:~$ cd /home/roma/work/palyan
+roma@tony-montana:~/work/palyan$ git status
+На ветке master
+Изменения, которые будут включены в коммит:
+  (используйте «git reset HEAD <файл>…», чтобы убрать из индекса)
+
+	удалено:       app/resources/templates/404.php
+	удалено:       app/resources/templates/index.php
+	удалено:       app/resources/templates/layout.php
+
+Изменения, которые не в индексе для коммита:
+  (используйте «git add <файл>…», чтобы добавить файл в индекс)
+  (используйте «git checkout -- <файл>…», чтобы отменить изменения
+   в рабочем каталоге)
+
+	изменено:      app/config/routes.php
+	изменено:      public/index.php
+	изменено:      src/Acme/Demo/Controller/Demo.php
+
+Неотслеживаемые файлы:
+  (используйте «git add <файл>…», чтобы добавить в то, что будет включено в коммит)
+
+	bootstrap/
+	src/Acme/Demo/Controller/Dashboard.php
+
+roma@tony-montana:~/work/palyan$ git checkout.
+git: «checkout.» не является командой git. Смотрите «git --help».
+
+Возможно, вы имели в виду это?
+	checkout
+roma@tony-montana:~/work/palyan$ git checkout .
+roma@tony-montana:~/work/palyan$ git status
+На ветке master
+Изменения, которые будут включены в коммит:
+  (используйте «git reset HEAD <файл>…», чтобы убрать из индекса)
+
+	удалено:       app/resources/templates/404.php
+	удалено:       app/resources/templates/index.php
+	удалено:       app/resources/templates/layout.php
+
+Неотслеживаемые файлы:
+  (используйте «git add <файл>…», чтобы добавить в то, что будет включено в коммит)
+
+	bootstrap/
+	src/Acme/Demo/Controller/Dashboard.php
+
+roma@tony-montana:~/work/palyan$ git reset HEAD app/resources/templates/404.php app/resources/templates/index.php app/resources/templates/layout.php
+Непроиндексированные изменения после сброса:
+D	app/resources/templates/404.php
+D	app/resources/templates/index.php
+D	app/resources/templates/layout.php
+roma@tony-montana:~/work/palyan$ git status
+На ветке master
+Изменения, которые не в индексе для коммита:
+  (используйте «git add/rm <файл>…», чтобы добавить или удалить файл из индекса)
+  (используйте «git checkout -- <файл>…», чтобы отменить изменения
+   в рабочем каталоге)
+
+	удалено:       app/resources/templates/404.php
+	удалено:       app/resources/templates/index.php
+	удалено:       app/resources/templates/layout.php
+
+Неотслеживаемые файлы:
+  (используйте «git add <файл>…», чтобы добавить в то, что будет включено в коммит)
+
+	bootstrap/
+	src/Acme/Demo/Controller/Dashboard.php
+
+нет изменений добавленных для коммита
+(используйте «git add» и/или «git commit -a»)
+roma@tony-montana:~/work/palyan$ git checkout .
+roma@tony-montana:~/work/palyan$ git status
+На ветке master
+Неотслеживаемые файлы:
+  (используйте «git add <файл>…», чтобы добавить в то, что будет включено в коммит)
+
+	bootstrap/
+	src/Acme/Demo/Controller/Dashboard.php
+
+ничего не добавлено в коммит, но есть неотслеживаемые файлы (используйте «git add», чтобы отслеживать их)
+roma@tony-montana:~/work/palyan$ rm -rf bootstrap/ src/Acme/Demo/Controller/Dashboard.php
+roma@tony-montana:~/work/palyan$ git status
+На ветке master
+нечего коммитить, нет изменений в рабочем каталоге
+roma@tony-montana:~/work/palyan$ 
+roma@tony-montana:~/work/palyan$ git status
+На ветке master
+Изменения, которые не в индексе для коммита:
+  (используйте «git add <файл>…», чтобы добавить файл в индекс)
+  (используйте «git checkout -- <файл>…», чтобы отменить изменения
+   в рабочем каталоге)
+
+	изменено:      app/config/routes.php
+
+нет изменений добавленных для коммита
+(используйте «git add» и/или «git commit -a»)
+roma@tony-montana:~/work/palyan$ git diff
+diff --git a/app/config/routes.php b/app/config/routes.php
+index 8f50819..83378f9 100644
+--- a/app/config/routes.php
++++ b/app/config/routes.php
+@@ -8,20 +8,20 @@
+        \Flight::render('404', array());
+ });
+ 
+-\Flight::map('error', function(\Exception $e) {
+-       //You probably want to log the error.
+-       switch($e->getCode()) {
+-               case E_ERROR:
+-               case E_USER_ERROR:
+-               case E_CORE_ERROR:
+-                       break;
+-               case E_WARNING:
+-               case E_USER_WARNING:
+-               case E_CORE_WARNING:
+-                       break;
+-               case E_NOTICE:
+-               case E_USER_NOTICE:
+-                       break;
+-               default:
+-       }
+-});
+\ No newline at end of file
++//\Flight::map('error', function(\Exception $e) {
++//     //You probably want to log the error.
++//     switch($e->getCode()) {
++//             case E_ERROR:
++//             case E_USER_ERROR:
++//             case E_CORE_ERROR:
++//                     break;
++//             case E_WARNING:
++//             case E_USER_WARNING:
++//             case E_CORE_WARNING:
++//                     break;
++//             case E_NOTICE:
++//             case E_USER_NOTICE:
++//                     break;
++//             default:
++//     }
++//});
+\ No newline at end of file
+roma@tony-montana:~/work/palyan$ 
+roma@tony-montana:~/work/palyan$ 
+roma@tony-montana:~/work/palyan$ git add .
+roma@tony-montana:~/work/palyan$ git commit -m "enable show errors"
+[master e577626] enable show errors
+ 1 file changed, 27 insertions(+), 27 deletions(-)
+ rewrite app/config/routes.php (62%)
+roma@tony-montana:~/work/palyan$ git push
+fatal: Не настроена точка назначения для отправки.
+Либо укажите URL с помощью командной строки, либо настройте внешний репозиторий с помощью
+
+    git remote add <имя> <адрес>
+
+а затем отправьте изменения с помощью имени внешнего репозитория
+
+    git push <имя>
+
+roma@tony-montana:~/work/palyan$ cat .git/config 
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "pl"]
+	url = https://github.com/On-air/palyan.git
+	fetch = +refs/heads/*:refs/remotes/pl/*
+roma@tony-montana:~/work/palyan$ 
+roma@tony-montana:~/work/palyan$ 
+roma@tony-montana:~/work/palyan$ 
+roma@tony-montana:~/work/palyan$ git remote
+pl
+roma@tony-montana:~/work/palyan$ git push pl master
+Username for 'https://github.com': seephp
+Password for 'https://seephp@github.com': 
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/On-air/palyan.git/'
+roma@tony-montana:~/work/palyan$ git push pl master
+Username for 'https://github.com': seephp
+Password for 'https://seephp@github.com': 
+Подсчет объектов: 5, готово.
+Delta compression using up to 4 threads.
+Сжатие объектов: 100% (5/5), готово.
+Запись объектов: 100% (5/5), 602 bytes | 0 bytes/s, готово.
+Total 5 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+remote: This repository moved. Please use the new location:
+remote:   https://github.com/seephp/palyan.git
+To https://github.com/On-air/palyan.git
+   e92688c..e577626  master -> master
+roma@tony-montana:~/work/palyan$ 
+roma@tony-montana:~/work/palyan$ 
+roma@tony-montana:~/work/palyan$ 
+roma@tony-montana:~/work/palyan$ git status
+На ветке master
+Изменения, которые не в индексе для коммита:
+  (используйте «git add <файл>…», чтобы добавить файл в индекс)
+  (используйте «git checkout -- <файл>…», чтобы отменить изменения
+   в рабочем каталоге)
+
+	изменено:      app/config/routes.php
+
+нет изменений добавленных для коммита
+(используйте «git add» и/или «git commit -a»)
+roma@tony-montana:~/work/palyan$ git status
+На ветке master
+Изменения, которые не в индексе для коммита:
+  (используйте «git add <файл>…», чтобы добавить файл в индекс)
+  (используйте «git checkout -- <файл>…», чтобы отменить изменения
+   в рабочем каталоге)
+
+	изменено:      app/config/routes.php
+
+Неотслеживаемые файлы:
+  (используйте «git add <файл>…», чтобы добавить в то, что будет включено в коммит)
+
+	app/resources/templates/dashboard.php
+	src/Acme/Demo/Controller/Dashboard.php
+
+нет изменений добавленных для коммита
+(используйте «git add» и/или «git commit -a»)
+roma@tony-montana:~/work/palyan$ git diff ^C
+roma@tony-montana:~/work/palyan$ git diff app/config/routes.php
+diff --git a/app/config/routes.php b/app/config/routes.php
+index 83378f9..cd36bab 100644
+--- a/app/config/routes.php
++++ b/app/config/routes.php
+@@ -3,11 +3,15 @@
+ //Routes of the application.
+ \Flight::route('/', array('\Acme\Demo\Controller\Demo', 'index'));
+ 
++\Flight::route('/dashboard', array('\Acme\Demo\Controller\Dashboard', 'index'));
++
+ //Mappings.
+ \Flight::map('notFound', function() {
+        \Flight::render('404', array());
+ });
+ 
++
++
+ //\Flight::map('error', function(\Exception $e) {
+ //     //You probably want to log the error.
+ //     switch($e->getCode()) {
+roma@tony-montana:~/work/palyan$ git diff app/resources/templates/dashboard.php
+roma@tony-montana:~/work/palyan$ git add .
+roma@tony-montana:~/work/palyan$ git status
+На ветке master
+Изменения, которые будут включены в коммит:
+  (используйте «git reset HEAD <файл>…», чтобы убрать из индекса)
+
+	изменено:      app/config/routes.php
+	новый файл:    app/resources/templates/dashboard.php
+	новый файл:    src/Acme/Demo/Controller/Dashboard.php
+
+roma@tony-montana:~/work/palyan$ git commit -m "add dashboard"
+[master 975fd6c] add dashboard
+ 3 files changed, 24 insertions(+)
+ create mode 100644 app/resources/templates/dashboard.php
+ create mode 100644 src/Acme/Demo/Controller/Dashboard.php
+roma@tony-montana:~/work/palyan$ git push pl master
+Username for 'https://github.com': seephp
+Password for 'https://seephp@github.com': 
+Подсчет объектов: 13, готово.
+Delta compression using up to 4 threads.
+Сжатие объектов: 100% (8/8), готово.
+Запись объектов: 100% (13/13), 1.34 KiB | 0 bytes/s, готово.
+Total 13 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+remote: This repository moved. Please use the new location:
+remote:   https://github.com/seephp/palyan.git
+To https://github.com/On-air/palyan.git
+   e577626..975fd6c  master -> master
+roma@tony-montana:~/work/palyan$ 
+
+
+
+

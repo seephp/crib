@@ -1,0 +1,34 @@
+маршрут к dashboard 
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth']], function(){
+  Route::get('/', 'DashboardController@dashboard') -> name('admin.index');
+});
+
+
+
+php artisan key:generate
+
+php artisan make:auth
+
+php artisan make:model Category -m  - создание модели, а ключ -м для создание миграции этой модели
+
+php artisan route:list
+
+php artisan make:controller Admin/DashboardController
+
+views/admin dashboard.blade.php
+
+@extends('admin.layouts.app_admin')
+
+ @section('content')
+
+ 
+
+cd ~/.ssh
+ls
+
+ssh-keygen
+
+стараемся не давать имен и паролей, дабы потом их не вводить 
+
+просмотр кода ключа cat ----
