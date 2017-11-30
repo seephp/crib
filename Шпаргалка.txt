@@ -1,4 +1,48 @@
+LARAVEL
+
+@section('rvv')
+@show
+@yield('content);
+include('inc.sidebar') -inc это название папки а сайдбар название вьюхи
+@parent - если на двух страничках одиноковые секшн и эндсекшн то поставви над одной из
+секшн этот ключ парент то будут отображаться обе надписи .
+@endsection
+
+вносим правки:
+ServerName - домен, на котором будет открыватся твой проект
+DocumentRoot - путь к твоему проекту
+
+для этого nano /etc/apache2/sites-available/firstsite.conf
+
+2. Включаем в работу виртуалхост
+sudo a2ensite sitename.conf
+
+3. Перезагружаем сервер
+sudo service apache2 restart
+
+4. В файл /etc/hosts
+вносим новый домен проекта и ип, на который системе стоит обращатся (в нашем случае на локалхост)
+
+для этого sudo nano /etc/hosts
+
+
 маршрут к dashboard 
+
+супер аддминка https://github.com/appzcoder/laravel-admin
+
+$table->increments('id');
+            $table->string('title');
+            $table->string('slug')->unique();  - слаг это генерация имен http://category/ ----name---
+            $table->integer('parent_id')->nullable();
+            $table->tinyInteger('published')->nullable(); - поле с целыми числами от 0 до 255 статус опубликованно либо нет
+            $table->integer('created_by')->nullable(); - кто создал категорию и назн права доступа
+            $table->integer('modified_by')->nullable(); - кто категорию модифицировал
+            $table->timestamps();
+
+Ресурсный контроллер это CRUD (create, read, update, delete)
+php artisan migrate 
+
+Route::resource('/category', 'CategoryController', ['as'=>'admin']); - добавляем к маршруту префикс чтобы у на не переплиталось с другими маршрутами 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth']], function(){
   Route::get('/', 'DashboardController@dashboard') -> name('admin.index');
@@ -11,6 +55,7 @@ php artisan key:generate
 php artisan make:auth
 
 php artisan make:model Category -m  - создание модели, а ключ -м для создание миграции этой модели
+php artisan make:controller Admin/CategoryController --resource --model=Category - созд ресурсного контроллера связанного с моделью Category 
 
 php artisan route:list
 
@@ -32,3 +77,17 @@ ssh-keygen
 стараемся не давать имен и паролей, дабы потом их не вводить 
 
 просмотр кода ключа cat ----
+
+Пример подключения лэйаутов кусками 
+$body = array(
+            view('layout.default.sessions', ['chart' => $chart]),
+            view('layout.default.portfolio_grid'),
+            view('layout.default.about'),
+            view('layout.default.team'),
+            view('layout.default.clients'),
+            view('layout.default.contact'),
+            view('layout.default.chart', ['chart' => $chart]),
+        );
+
+             return view('layout.main', ['body' => implode("", $body)]);
+    }

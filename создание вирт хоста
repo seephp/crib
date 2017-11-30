@@ -23,7 +23,7 @@ sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-availab
 ServerName - домен, на котором будет открыватся твой проект
 DocumentRoot - путь к твоему проекту
 
-для этого nano /etc/apache2/sites-available/firstsite.conf
+для этого sudo nano /etc/apache2/sites-available/firstsite.conf
 
 в чем секрет, вставляем вот этот текст и в нем уже правим 
 
